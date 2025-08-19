@@ -1,0 +1,27 @@
+create_parking_lot Main 6
+create_parking_lot Premium 4
+create_parking_lot Economy 8
+status
+park KA-01-HH-1234 White Main
+park KA-01-HH-9999 White Premium
+park KA-01-BB-0001 Black Main
+park KA-01-HH-7777 Red Premium
+park KA-01-HH-2701 Blue Economy
+park KA-01-HH-3141 Black Economy
+park KA-01-HH-8888 Green Main
+park KA-01-HH-5555 Yellow Premium
+status
+lot_info Main
+lot_info Premium
+lot_info Economy
+best_lot
+park KA-01-HH-6666 Purple Economy
+park KA-01-HH-4444 Orange Main
+registration_numbers_for_cars_with_colour White
+slot_numbers_for_cars_with_colour White
+slot_number_for_registration_number KA-01-HH-3141
+leave Main 1
+leave Premium 2
+status Main
+status Premium
+best_lot

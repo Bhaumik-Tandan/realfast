@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "Running Functional Tests for Parking Lot Management System"
+echo "========================================================="
+
+# Activate virtual environment if it exists
+if [ -d "venv" ]; then
+    source venv/bin/activate
+fi
+
+# Make sure the main script is executable
+chmod +x bin/parking_lot
+
+# Test Level 1 Basic Functionality
+echo ""
+echo "Test 1: Level 1 Basic Functionality"
+echo "-----------------------------------"
+./bin/parking_lot functional_spec/test_inputs/level1_basic.txt
+
+echo ""
+echo "Test 2: Level 1 Edge Cases"
+echo "---------------------------"
+./bin/parking_lot functional_spec/test_inputs/level1_edge_cases.txt
+
+echo ""
+echo "Functional tests completed!"
