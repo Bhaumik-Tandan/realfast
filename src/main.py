@@ -13,6 +13,9 @@ def process_command(service: ParkingLotService, command: str) -> str:
     
     cmd = parts[0].lower()
     
+    if cmd == "exit":
+        return "exit"
+    
     if cmd == "create_parking_lot":
         if len(parts) != 2:
             return "Usage: create_parking_lot <number_of_slots>"
@@ -57,24 +60,53 @@ def process_command(service: ParkingLotService, command: str) -> str:
     else:
         return f"Unknown command: {cmd}"
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python main.py <input_file>")
-        sys.exit(1)
+def run_interactive(service: ParkingLotService):
+    print("Parking Lot Management System - Interactive Mode")
+    print("Type 'exit' to quit")
+    print("-" * 50)
     
-    input_file = sys.argv[1]
+    while True:
+        try:
+            command = input("$ ").strip()
+            if not command:
+                continue
+                
+            result = process_command(service, command)
+            if result == "exit":
+                print("Goodbye!")
+                break
+            if result:
+                print(result)
+        except EOFError:
+            break
+        except KeyboardInterrupt:
+            print("\nGoodbye!")
+            break
+
+def main():
     service = ParkingLotService()
     
-    try:
-        with open(input_file, 'r') as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    result = process_command(service, line)
-                    if result:
-                        print(result)
-    except FileNotFoundError:
-        print(f"Input file not found: {input_file}")
+    if len(sys.argv) == 1:
+        # Interactive mode
+        run_interactive(service)
+    elif len(sys.argv) == 2:
+        # File input mode
+        input_file = sys.argv[1]
+        try:
+            with open(input_file, 'r') as f:
+                for line in f:
+                    line = line.strip()
+                    if line:
+                        result = process_command(service, line)
+                        if result and result != "exit":
+                            print(result)
+        except FileNotFoundError:
+            print(f"Input file not found: {input_file}")
+            sys.exit(1)
+    else:
+        print("Usage: python main.py [input_file]")
+        print("  No arguments: Interactive mode")
+        print("  With file: File input mode")
         sys.exit(1)
 
 if __name__ == "__main__":
